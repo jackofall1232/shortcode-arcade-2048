@@ -18,9 +18,15 @@ window.fakeStorage = {
   }
 };
 
-function LocalStorageManager() {
-  this.bestScoreKey     = "bestScore";
-  this.gameStateKey     = "gameState";
+function LocalStorageManager(container) {
+  var storagePrefix = "sacga-2048";
+
+  if (container && container.getAttribute) {
+    storagePrefix = container.getAttribute("data-sacga-instance") || container.id || storagePrefix;
+  }
+
+  this.bestScoreKey     = storagePrefix + ":bestScore";
+  this.gameStateKey     = storagePrefix + ":gameState";
 
   var supported = this.localStorageSupported();
   this.storage = supported ? window.localStorage : window.fakeStorage;

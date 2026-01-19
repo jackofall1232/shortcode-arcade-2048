@@ -1,5 +1,6 @@
-function KeyboardInputManager() {
+function KeyboardInputManager(container) {
   this.events = {};
+  this.container = container;
 
   if (window.navigator.msPointerEnabled) {
     //Internet Explorer 10 style
@@ -50,7 +51,7 @@ KeyboardInputManager.prototype.listen = function () {
   };
 
   // Respond to direction keys
-  document.addEventListener("keydown", function (event) {
+  this.container.addEventListener("keydown", function (event) {
     var modifiers = event.altKey || event.ctrlKey || event.metaKey ||
                     event.shiftKey;
     var mapped    = map[event.which];
@@ -75,7 +76,11 @@ KeyboardInputManager.prototype.listen = function () {
 
   // Respond to swipe events
   var touchStartClientX, touchStartClientY;
-  var gameContainer = document.getElementsByClassName("game-container")[0];
+  var gameContainer = this.container.querySelector(".game-container");
+
+  if (!gameContainer) {
+    return;
+  }
 
   gameContainer.addEventListener(this.eventTouchstart, function (event) {
     if ((!window.navigator.msPointerEnabled && event.touches.length > 1) ||
@@ -138,7 +143,10 @@ KeyboardInputManager.prototype.keepPlaying = function (event) {
 };
 
 KeyboardInputManager.prototype.bindButtonPress = function (selector, fn) {
-  var button = document.querySelector(selector);
+  var button = this.container.querySelector(selector);
+  if (!button) {
+    return;
+  }
   button.addEventListener("click", fn.bind(this));
   button.addEventListener(this.eventTouchend, fn.bind(this));
 };

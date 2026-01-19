@@ -1,8 +1,9 @@
-function HTMLActuator() {
-  this.tileContainer    = document.querySelector(".tile-container");
-  this.scoreContainer   = document.querySelector(".score-container");
-  this.bestContainer    = document.querySelector(".best-container");
-  this.messageContainer = document.querySelector(".game-message");
+function HTMLActuator(container) {
+  this.container        = container;
+  this.tileContainer    = container.querySelector(".tile-container");
+  this.scoreContainer   = container.querySelector(".score-container");
+  this.bestContainer    = container.querySelector(".best-container");
+  this.messageContainer = container.querySelector(".game-message");
 
   this.score = 0;
 }

@@ -115,10 +115,13 @@ function shortcode_arcade_2048_enqueue_assets() {
  */
 function shortcode_arcade_2048_render_shortcode() {
 	shortcode_arcade_2048_enqueue_assets();
+	$instance_id = function_exists( 'wp_unique_id' )
+		? wp_unique_id( 'sacga-2048-' )
+		: uniqid( 'sacga-2048-', false );
 
 	ob_start();
 	?>
-	<div class="sacga-2048">
+	<div id="<?php echo esc_attr( $instance_id ); ?>" class="sacga-2048" data-sacga-instance="<?php echo esc_attr( $instance_id ); ?>" tabindex="0">
 		<div class="container">
 			<div class="heading">
 				<h1 class="title">2048</h1>
